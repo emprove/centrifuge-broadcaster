@@ -10,7 +10,7 @@
          processIsolation="false"
          stopOnFailure="false">
     <testsuites>
-        <testsuite name="Centrifuge Test Suite">
+        <testsuite name="Centrifugo Test Suite">
             <directory>tests</directory>
         </testsuite>
     </testsuites>

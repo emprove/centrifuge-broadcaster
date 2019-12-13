@@ -1,13 +1,13 @@
 {
     "name": "emprove/centrifuge-broadcaster",
     "type": "library",
-    "description": "Centrifuge broadcaster for laravel >= 5.7",
-    "keywords": ["laravel", "centrifuge", "centrifugo", "broadcaster"],
+    "description": "Centrifugo broadcaster for laravel ^5.8 | ^6.0",
+    "keywords": ["laravel", "centrifugo", "broadcaster"],
     "license": "MIT",
     "authors": [
         {
             "name": "Emprove",
-            "email": "skyflap@gmail.com"
+            "email": "emprove@pm.me"
         }
     ],
     "homepage": "https://github.com/emprove/centrifuge-broadcaster",
@@ -17,7 +17,7 @@
     },
     "require": {
         "php": "^7.1.3",
-        "illuminate/broadcasting": "5.8.*",
+        "illuminate/broadcasting": "^5.8|^6.0",
         "guzzlehttp/guzzle": "^6.3.3",
         "lcobucci/jwt": "^3.2"
     },
@@ -27,18 +27,18 @@
     },
     "autoload": {
         "psr-4": {
-            "LaraComponents\\Centrifuge\\": "src/"
+            "Emprove\\Centrifugo\\": "src/"
         }
     },
     "autoload-dev": {
         "psr-4": {
-            "LaraComponents\\Centrifuge\\Test\\": "tests/"
+            "Emprove\\Centrifugo\\Test\\": "tests/"
         }
     },
     "extra": {
         "laravel": {
             "providers": [
-                "LaraComponents\\Centrifuge\\CentrifugeServiceProvider"
+                "Emprove\\Centrifugo\\CentrifugoServiceProvider"
             ]
         }
     },
@@ -48,3 +48,4 @@
     "minimum-stability": "dev",
     "prefer-stable": true
 }
+

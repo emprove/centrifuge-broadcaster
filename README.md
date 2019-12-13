@@ -1,15 +1,15 @@
 ### Attention! Maybe some diff with IRL.
-1. This package forked from "LaraComponents" to fit new Centrifugo v2.
+1. This package forked from [LaraComponents/centrifuge-broadcaster](https://github.com/LaraComponents/centrifuge-broadcaster) to fit new Centrifugo v2.
 2. Drop Redis support (v2 don't support it), see official [migration guide](https://centrifugal.github.io/centrifugo/misc/migrate/).
 3. Update generateToken(user id, timestamp, info) method (v2 uses only jwt auth workflow).
 
 ## Introduction
-Centrifuge broadcaster for laravel >= 5.7
+Centrifuge broadcaster for laravel ^5.8 | ^6.0
 
 ## Requirements
 
-- PHP 7.1.3+ or newer (tested on 7.2.10) 
-- Laravel 5.3+ or newer (tested on 5.7.8)
+- PHP 7.1.3+ or newer
+- Laravel 5.8+ or newer
 - Centrifugo Server 2 or newer (see [here](https://github.com/centrifugal/centrifugo))
 
 ## Installation
@@ -25,7 +25,7 @@ Open your config/app.php and add the following to the providers array:
 ```php
 'providers' => [
     // ...
-    LaraComponents\Centrifuge\CentrifugeServiceProvider::class,
+    Emprove\Centrifugo\CentrifugoServiceProvider::class,
 
     // And uncomment BroadcastServiceProvider
     App\Providers\BroadcastServiceProvider::class,
@@ -36,15 +36,15 @@ Open your config/broadcasting.php and add the following to it:
 
 ```php
 'connections' => [
-    'centrifuge' => [
-        'driver'       => 'centrifuge',
-        'url'          => env('CENTRIFUGE_URL', 'http://127.0.0.1:8000'),
-        'token_ttl'    => env('CENTRIFUGE_TOKEN_TTL', 3600),
+    'centrifugo' => [
+        'driver'       => 'centrifugo',
+        'url'          => env('CENTRIFUGO_URL', 'http://127.0.0.1:8000'),
+        'token_ttl'    => env('CENTRIFUGO_TOKEN_TTL', 3600),
         'token_issuer' => env('APP_URL', 'default'),
-        'secret'       => env('CENTRIFUGE_SECRET', null),
-        'api_key'      => env('CENTRIFUGE_API_KEY', null),
-        'ssl_key'      => env('CENTRIFUGE_SSL_KEY', null),
-        'verify'       => env('CENTRIFUGE_VERIFY', false),
+        'secret'       => env('CENTRIFUGO_SECRET', null),
+        'api_key'      => env('CENTRIFUGO_API_KEY', null),
+        'ssl_key'      => env('CENTRIFUGO_SSL_KEY', null),
+        'verify'       => env('CENTRIFUGO_VERIFY', false),
     ],
     // ...
 ],
@@ -53,25 +53,25 @@ Open your config/broadcasting.php and add the following to it:
 You can also add a configuration to your .env file:
 
 ```
-CENTRIFUGE_API_KEY=very-long-secret-api-key
-CENTRIFUGE_SECRET=very-long-secret-key
-CENTRIFUGE_URL=http://localhost:8000
-CENTRIFUGE_SSL_KEY=/etc/ssl/some.pem
-CENTRIFUGE_TOKEN_TTL=3600 # seconds
-CENTRIFUGE_VERIFY=false
+CENTRIFUGO_API_KEY=very-long-secret-api-key
+CENTRIFUGO_SECRET=very-long-secret-key
+CENTRIFUGO_URL=http://localhost:8000
+CENTRIFUGO_SSL_KEY=/etc/ssl/some.pem
+CENTRIFUGO_TOKEN_TTL=3600 # seconds
+CENTRIFUGO_VERIFY=false
 ```
 
 Do not forget to install the broadcast driver
 
 ```
-BROADCAST_DRIVER=centrifuge
+BROADCAST_DRIVER=centrifugo
 ```
 
 ## Basic Usage
 
 To configure the Centrifugo server, read the [official documentation](https://fzambia.gitbooks.io/centrifugal/content)
 
-For broadcasting events, see the [official documentation of laravel](https://laravel.com/docs/5.3/broadcasting)
+For broadcasting events, see the [official documentation of laravel](https://laravel.com/docs/6.x/broadcasting)
 
 A simple example of using the client:
 
@@ -80,19 +80,19 @@ A simple example of using the client:
 
 namespace App\Http\Controllers;
 
-use LaraComponents\Centrifuge\Centrifuge;
+use Emprove\Centrifugo\Centrifugo;
 
-class ExampleController extends Controller
+class ExampleController
 {
-    public function home(Centrifuge $centrifuge)
+    public function home(Centrifugo $centrifugo)
     {
         // Send message into channel
-        $centrifuge->publish('channel-name', [
+        $centrifugo->publish('channel-name', [
             'key' => 'value'
         ]);
 
         // Generate api sign
-        $apiSign = $centrifuge->generateApiSign('data');
+        $apiSign = $centrifugo->generateApiSign('data');
 
         // ...
     }

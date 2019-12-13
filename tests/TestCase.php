@@ -1,37 +1,39 @@
 <?php
 
-namespace LaraComponents\Centrifuge\Test;
+namespace Emprove\Centrifugo\Test;
 
 use Orchestra\Testbench\TestCase as Orchestra;
-use LaraComponents\Centrifuge\CentrifugeServiceProvider;
+use Emprove\Centrifugo\Centrifugo;
+use Emprove\Centrifugo\CentrifugoServiceProvider;
 
 class TestCase extends Orchestra
 {
     /**
-     * @var \LaraComponents\Centrifuge\Centrifuge
+     * @var Centrifugo
      */
-    protected $centrifuge;
+    protected $centrifugo;
 
     public function setUp()
     {
         parent::setUp();
-        $this->centrifuge = $this->app->make('centrifuge');
+
+        $this->centrifugo = $this->app->make('centrifugo');
     }
 
     protected function getPackageProviders($app)
     {
         return [
-            CentrifugeServiceProvider::class,
+            CentrifugoServiceProvider::class,
         ];
     }
 
     protected function getEnvironmentSetUp($app)
     {
-        $app['config']->set('broadcasting.default', 'centrifuge');
-        $app['config']->set('broadcasting.connections.centrifuge', [
-            'driver' => 'centrifuge',
+        $app['config']->set('broadcasting.default', 'centrifugo');
+        $app['config']->set('broadcasting.connections.centrifugo', [
+            'driver' => 'centrifugo',
             'secret' => 'f95bf295-bee6-4259-8912-0a58f4ecd30e',
-            'url' => 'http://localhost:8000',
+            'url'    => 'http://localhost:8000',
         ]);
     }
 }
