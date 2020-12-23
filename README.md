@@ -4,12 +4,12 @@
 3. Update generateToken(user id, timestamp, info) method (v2 uses only jwt auth workflow).
 
 ## Introduction
-Centrifuge broadcaster for laravel >= 5.7
+Centrifuge broadcaster for laravel ^6
 
 ## Requirements
 
-- PHP 7.1.3+ or newer (tested on 7.2.10) 
-- Laravel 5.3+ or newer (tested on 5.7.8)
+- PHP 7.2+
+- Laravel 6+
 - Centrifugo Server 2 or newer (see [here](https://github.com/centrifugal/centrifugo))
 
 ## Installation
