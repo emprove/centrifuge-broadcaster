@@ -8,6 +8,7 @@ use GuzzleHttp\Exception\ClientException;
 use LaraComponents\Centrifuge\Contracts\Centrifuge as CentrifugeContract;
 use Lcobucci\JWT\Builder;
 use Lcobucci\JWT\Signer\Hmac\Sha256;
+use Lcobucci\JWT\Signer\Key;
 
 class Centrifuge implements CentrifugeContract
 {
@@ -270,14 +271,12 @@ class Centrifuge implements CentrifugeContract
 	 */
 	public function generateToken(string $userId)
 	{
-		$signer = new Sha256();
+        $signer = new Sha256();
+        $expiresAt = (new \DateTimeImmutable)->add(new \DateInterval("PT{$this->config['token_ttl']}S"));
 
-		$token = (new Builder())->setIssuer($this->config['token_issuer'])
-			->setExpiration(now()->getTimestamp() + $this->config['token_ttl'])
-			->set('sub', $userId)
-			->sign($signer, $this->config['secret'])
-			->getToken();
-
-		return $token;
+        return (new Builder())->issuedBy($this->config['token_issuer'])
+            ->expiresAt($expiresAt)
+            ->set('sub', $userId)
+            ->getToken($signer, new Key($this->config['secret']));
 	}
 }
