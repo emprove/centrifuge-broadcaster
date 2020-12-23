@@ -25,7 +25,7 @@ Open your config/app.php and add the following to the providers array:
 ```php
 'providers' => [
     // ...
-    LaraComponents\Centrifuge\CentrifugeServiceProvider::class,
+    Emprove\Centrifugo\CentrifugoServiceProvider::class,
 
     // And uncomment BroadcastServiceProvider
     App\Providers\BroadcastServiceProvider::class,
@@ -80,11 +80,11 @@ A simple example of using the client:
 
 namespace App\Http\Controllers;
 
-use LaraComponents\Centrifuge\Centrifuge;
+use Emprove\Centrifugo\Contracts\Centrifugo;
 
 class ExampleController extends Controller
 {
-    public function home(Centrifuge $centrifuge)
+    public function home(Centrifugo $centrifuge)
     {
         // Send message into channel
         $centrifuge->publish('channel-name', [
